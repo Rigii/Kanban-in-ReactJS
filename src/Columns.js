@@ -10,7 +10,6 @@ class Columns extends React.Component{
         let columns=this.props.columns;
         let taskMoove=this.props.taskMoove
         let display=this.props.display
-       //console.log(display) 
        return (
         <tbody className="bodyTable">
         <tr>

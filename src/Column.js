@@ -6,9 +6,6 @@ class Card extends React.Component{
 		super(props);
 		this.state={
 			kardkey: props.cardKey,
-			date: moment().format('MMMM Do YYYY, h:mm:ss a'),
-			taskName: props.taskName,
-			taskContent: props.taskContent,
 		}
 		this.moove=this.moove.bind(this)
 		this.redact= this.redact.bind(this)
@@ -22,26 +19,26 @@ class Card extends React.Component{
 		if (e.target.className=="delTask"){nextColumn=null};
 		this.props.taskMoove({kardKey, colKey, nextColumn})
 	}
-	redact(){
+	redact(e){
 		let kardKey=this.state.kardkey;
 		let colKey=this.props.colKey;
 		let redact= 'inline-block';
-		let taskName=this.state.taskName;
-		let taskContent=this.state.taskContent;
+		let taskName=this.props.taskName;
+		let taskContent=this.props.taskContent;
 		this.props.display({kardKey,colKey,redact,taskName,taskContent})
 	}
 	render(){
             let taskName = this.props.taskName;// значение заголовка 
             let taskContent = this.props.taskContent;// значение контента
-            let timeIndex = moment().format('DDMMYYYYHmmss');
+            let date= this.props.date
             let color = this.props.color;
             let showDel=this.props.colKey==2||this.props.colKey==3? "inline-block": 'none'
             let showCancel=this.props.colKey==0||this.props.colKey==1? "inline-block": 'none' 
             let showRed=this.props.colKey==0||this.props.colKey==1? "inline-block": 'none'
             let showRight=this.props.colKey==0||this.props.colKey==1? "inline-block": 'none'
-            return (<div id={timeIndex} className="radioId" style={{backgroundColor:color}}>
+            return (<div className="radioId" style={{backgroundColor:color}}>
             	<div className="taskWindReady"><div><h4>{taskName}</h4></div><p>{taskContent}</p>
-            	<p>{this.state.date}</p>
+            	<p>{date}</p>
             	<img className="delTask" src={require("./img/ico/del.png")} alt="del" style={{display: showDel, cursor: 'pointer'}}
             	onClick={this.moove}/>
             	<img className="cancel" src={require("./img/ico/cancel.png")} alt="cancel" style={{cursor: 'pointer', display: showCancel}}
@@ -78,6 +75,7 @@ class Card extends React.Component{
     				colKey={columnIndex}
     				display={display}
     				taskMoove= {taskMoove}
+    				date={card.date}
     				/>
     			})
     		}
